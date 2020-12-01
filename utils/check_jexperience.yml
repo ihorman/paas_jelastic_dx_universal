@@ -116,7 +116,7 @@ actions:
     - script: |
         var unomi_env_name = "${globals.unomi_env_name}"
         var resp = jelastic.env.control.GetEnvInfo(unomi_env_name, session)
-        return {'result': 0, 'up'=resp['env']['status'] == 1}
+        return {'result': 0, 'up': resp['env']['status'] == 1}
 
     - if ( "${response.up}" == "false" ):
        - return:
