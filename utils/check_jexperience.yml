@@ -13,6 +13,7 @@ onInstall:
             type: success
             message: "No unomi linked"
 
+  - checkIfUnomiIsUp
   - getUnomiDnsAndPwd
   - checkJexperienceCfg
   - checkAllowedIps
@@ -40,6 +41,7 @@ actions:
     - script: |
         var unomi_env_name = "${globals.unomi_env_name}"
         var resp = jelastic.env.control.GetEnvInfo(unomi_env_name, session)
+
         for (var i = 0, g = resp.nodes; i < g.length; i++) {
           if (g[i].nodeGroup == "cp") {
             var unomi_nodeid = g[i].id
@@ -109,3 +111,14 @@ actions:
         return:
          type: error
          message: "IP ${this} not allowed in jcustomer configuration"
+
+  checkIfUnomiIsUp:
+    - script: |
+        var unomi_env_name = "${globals.unomi_env_name}"
+        var resp = jelastic.env.control.GetEnvInfo(unomi_env_name, session)
+        return {'result': 0, 'up'=resp['env']['status'] == 1}
+
+    - if ( "${response.up}" == "false" ):
+       - return:
+            type: success
+            message: "Unomi env is stopped"
