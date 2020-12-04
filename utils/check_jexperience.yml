@@ -109,3 +109,11 @@ actions:
         return:
          type: error
          message: "IP ${this} not allowed in jcustomer configuration"
+
+settings:
+  fields:
+    - name: test
+      type: string
+      caption: Jahia version
+      required: true
+
