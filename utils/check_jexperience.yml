@@ -7,6 +7,7 @@ description:
   short: Jahia - check jexperience
 
 onInstall:
+  - log: " here is ${settings.test}"
   - getEnvLinked
   - if (! ${globals.unomi_env_linked}):
        - return:
